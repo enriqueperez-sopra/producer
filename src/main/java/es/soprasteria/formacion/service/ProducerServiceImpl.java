@@ -1,8 +1,7 @@
 package es.soprasteria.formacion.service;
 
+import es.soprasteria.formacion.dto.SampleMessage;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ public class ProducerServiceImpl implements ProducerService {
   private AmqpTemplate myRabbitTemplate;
 
   @Override
-  public void sendMessage(String message) {
-    myRabbitTemplate.send("my-exchange", "key", new Message(message.getBytes(), new MessageProperties()));
+  public void sendMessage(SampleMessage message) {
+    myRabbitTemplate.convertAndSend("my-exchange", null, message);
   }
 }
